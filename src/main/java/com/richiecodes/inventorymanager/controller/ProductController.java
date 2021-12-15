@@ -6,6 +6,7 @@ import com.richiecodes.inventorymanager.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,18 +19,21 @@ public class ProductController {
     private ProductRepository repository;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Product> getAllProducts() {
         return repository.findAll();
     }
 
     // CREATE
     @PostMapping
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Product createProduct(@RequestBody Product p) {
         return repository.save(p);
     }
 
     // READ
     @GetMapping("{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Product> getProductById(@PathVariable long id) {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No products with ID " + id));
@@ -39,6 +43,7 @@ public class ProductController {
 
     // UPDATE
     @PostMapping("{id}")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product details) {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No products with ID " + id));
@@ -55,6 +60,7 @@ public class ProductController {
 
     // DELETE
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable long id) {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No products with ID " + id));

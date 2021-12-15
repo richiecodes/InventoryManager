@@ -1,32 +1,26 @@
 package com.richiecodes.inventorymanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "price")
-    private double price;
+    private Double price;
 
     @Column(name = "perishable")
     private boolean perishable;
 
     @Column(name = "QTY")
-    private int qty;
+    private Integer qty;
 }
