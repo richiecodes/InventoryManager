@@ -1,9 +1,7 @@
 package com.richiecodes.inventorymanager.controller;
 
 import com.richiecodes.inventorymanager.exception.ResourceNotFoundException;
-import com.richiecodes.inventorymanager.model.Employee;
 import com.richiecodes.inventorymanager.model.Product;
-import com.richiecodes.inventorymanager.repository.EmployeeRepository;
 import com.richiecodes.inventorymanager.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
