@@ -1,8 +1,7 @@
 package com.richiecodes.inventorymanager.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.richiecodes.inventorymanager.model.auth.User;
-import lombok.AllArgsConstructor;
+import com.richiecodes.inventorymanager.model.Employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,12 +30,12 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
+    public static UserDetailsImpl build(Employee employee) {
+        List<GrantedAuthority> authorities = employee.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
-        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getPassword(), authorities);
+        return new UserDetailsImpl(employee.getId(), employee.getUsername(), employee.getPassword(), authorities);
     }
 
     public Long getId() {

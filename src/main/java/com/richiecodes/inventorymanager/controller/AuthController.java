@@ -2,13 +2,13 @@ package com.richiecodes.inventorymanager.controller;
 
 import com.richiecodes.inventorymanager.model.auth.ERole;
 import com.richiecodes.inventorymanager.model.auth.Role;
-import com.richiecodes.inventorymanager.model.auth.User;
+import com.richiecodes.inventorymanager.model.Employee;
 import com.richiecodes.inventorymanager.payloads.request.LoginRequest;
 import com.richiecodes.inventorymanager.payloads.request.SignupRequest;
 import com.richiecodes.inventorymanager.payloads.response.JwtResponse;
 import com.richiecodes.inventorymanager.payloads.response.MessageResponse;
 import com.richiecodes.inventorymanager.repository.RoleRepository;
-import com.richiecodes.inventorymanager.repository.UserRepository;
+import com.richiecodes.inventorymanager.repository.EmployeeRepository;
 import com.richiecodes.inventorymanager.security.jwt.JwtUtils;
 import com.richiecodes.inventorymanager.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
-    private UserRepository userRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -64,14 +64,14 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
-        if (userRepository.existsByUsername(signupRequest.getUsername())) {
+        if (employeeRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email already in use. Please login or reset password"));
         }
 
         //Create new account
-        User user = new User(signupRequest.getUsername(), encoder.encode(signupRequest.getPassword()));
+        Employee employee = new Employee(signupRequest.getUsername(), encoder.encode(signupRequest.getPassword()));
         Set<String> strRoles = signupRequest.getRoles();
 
         Set<Role> roles = new HashSet<>();
@@ -99,8 +99,8 @@ public class AuthController {
                 }
             });
         }
-        user.setRoles(roles);
-        userRepository.save(user);
+        employee.setRoles(roles);
+        employeeRepository.save(employee);
 
         return new ResponseEntity(new MessageResponse("User registered Successfully"), HttpStatus.CREATED);
     }

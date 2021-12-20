@@ -23,4 +23,7 @@ public class Product {
 
     @Column(name = "QTY")
     private Integer qty;
+
+    @Column(name = "expiration_date")
+    private String expirationDate;
 }

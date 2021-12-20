@@ -1,5 +1,6 @@
-package com.richiecodes.inventorymanager.model.auth;
+package com.richiecodes.inventorymanager.model;
 
+import com.richiecodes.inventorymanager.model.auth.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users",
+@Table(name = "employees",
         uniqueConstraints = {
             @UniqueConstraint(columnNames = "username"),
         })
 
-public class User {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,14 +33,14 @@ public class User {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
-                joinColumns = @JoinColumn(name="user_id"),
+    @JoinTable(name = "employee_roles",
+                joinColumns = @JoinColumn(name="employee_id"),
                 inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User() {}
+    public Employee() {}
 
-    public User(String username, String password) {
+    public Employee(String username, String password) {
         this.username = username;
         this.password = password;
     }
