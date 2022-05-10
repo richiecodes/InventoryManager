@@ -6,11 +6,15 @@ public class SignupRequest {
     private String username;
     private String password;
     private Set<String> roles;
+    private String fname;
+    private String lname;
 
-    public SignupRequest(String username, String password, Set<String> roles) {
+    public SignupRequest(String username, String password, Set<String> roles, String fname, String lname) {
         this.username = username;
         this.password = password;
         this.roles = roles;
+        this.fname = fname;
+        this.lname = lname;
     }
 
     public Set<String> getRoles() {
@@ -30,5 +34,21 @@ public class SignupRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 }

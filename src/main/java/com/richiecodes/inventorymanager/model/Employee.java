@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "employees",
         uniqueConstraints = {
-            @UniqueConstraint(columnNames = "username"),
+            @UniqueConstraint(columnNames = "username")
         })
 
 public class Employee {
@@ -38,11 +38,19 @@ public class Employee {
                 inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @NotBlank
+    private String fname;
+
+    @NotBlank
+    private String lname;
+
     public Employee() {}
 
-    public Employee(String username, String password) {
+    public Employee(String username, String password, String fname, String lname) {
         this.username = username;
         this.password = password;
+        this.fname = fname;
+        this.lname = lname;
     }
 
     public Long getId() {
@@ -67,6 +75,22 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public Set<Role> getRoles() {
